@@ -7,11 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/*
-    User:Eduardo Noel<enoel@soaint.com>
-    Date: 13/5/21
-    Time: 18:33
-*/
+
 @Data
 @Builder
 @NoArgsConstructor

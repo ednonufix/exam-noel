@@ -9,11 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/*
-    User:Eduardo Noel<enoel@soaint.com>
-    Date: 15/5/21
-    Time: 23:16
-*/
+
 @RestControllerAdvice
 public class GlobalAPIErrorHandler {
 

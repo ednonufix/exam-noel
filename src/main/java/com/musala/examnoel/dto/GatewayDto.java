@@ -1,5 +1,6 @@
 package com.musala.examnoel.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,9 @@ import java.util.List;
 @Builder
 public class GatewayDto implements Serializable {
 
+    @JsonIgnore
     private String idGateway;
+
     private String uuid;
 
     @NotNull
@@ -32,7 +35,7 @@ public class GatewayDto implements Serializable {
     private String ip;
 
     @Valid
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 10,message = "Debe enviar al menos 1 periferico")
     private List<PeripheralDto> peripherals;
 
 }

@@ -1,7 +1,6 @@
 package com.musala.examnoel.views.index;
 
 import com.musala.examnoel.views.main.MainView;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.musala.examnoel.model.Gateway;
-import com.musala.examnoel.model.Peripheral;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
@@ -55,26 +54,12 @@ public class RedisConfiguration {
 
         GenericJackson2JsonRedisSerializer keySerializer = new GenericJackson2JsonRedisSerializer();
 
-        Jackson2JsonRedisSerializer<Gateway> serializer = new Jackson2JsonRedisSerializer<Gateway>(Gateway.class);
+        Jackson2JsonRedisSerializer<Gateway> serializer = new Jackson2JsonRedisSerializer<>(Gateway.class);
         serializer.setObjectMapper(mapper);
 
         RedisSerializationContext.RedisSerializationContextBuilder<String, Gateway> builder = RedisSerializationContext.newSerializationContext(keySerializer);
         RedisSerializationContext< String, Gateway> context = builder.value(serializer).hashValue(serializer).hashKey(keySerializer).build();
-        return new ReactiveRedisTemplate<String, Gateway>(connectionFactory, context);
-
-    }
-
-    @Bean("PERIPHERAL")
-    public ReactiveRedisTemplate<String, Peripheral> reactiveRedisTemplatePeripheral(ReactiveRedisConnectionFactory connectionFactory ) {
-
-        GenericJackson2JsonRedisSerializer keySerializer = new GenericJackson2JsonRedisSerializer();
-
-        Jackson2JsonRedisSerializer<Peripheral> serializer = new Jackson2JsonRedisSerializer<Peripheral>(Peripheral.class);
-        serializer.setObjectMapper(mapper);
-
-        RedisSerializationContext.RedisSerializationContextBuilder<String, Peripheral> builder = RedisSerializationContext.newSerializationContext(keySerializer);
-        RedisSerializationContext< String, Peripheral> context = builder.value(serializer).hashValue(serializer).hashKey(keySerializer).build();
-        return new ReactiveRedisTemplate<String, Peripheral>(connectionFactory, context);
+        return new ReactiveRedisTemplate<>(connectionFactory, context);
 
     }
 

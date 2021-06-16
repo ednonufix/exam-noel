@@ -5,11 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.embedded.RedisServer;
 
-/*
-    User:Eduardo Noel<enoel@soaint.com>
-    Date: 13/5/21
-    Time: 3:50
-*/
+
 @Configuration
 @Data
 public class RedisProperties {

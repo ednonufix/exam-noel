@@ -1,17 +1,18 @@
 package com.musala.examnoel.service;
 
 import com.musala.examnoel.dto.GatewayDto;
+import com.musala.examnoel.dto.PeripheralDto;
 import com.musala.examnoel.dto.TemplateControllerDto;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/*
-    User:Eduardo Noel<enoel@soaint.com>
-    Date: 7/5/21
-    Time: 4:35
-*/
+
 public interface ExamService {
 
-    public Mono<TemplateControllerDto> saveGateway(GatewayDto gatewayDto);
-
+    Mono<TemplateControllerDto> saveGateway(GatewayDto gatewayDto);
+    Mono<TemplateControllerDto> deletePeripheral(String uuid, Long idPeripheral);
+    Mono<TemplateControllerDto> addPeripheral(String uuid, PeripheralDto peripheralDto);
+    Flux<GatewayDto> listGateway();
+    Mono<GatewayDto> getGateway(String uuid);
 
 }

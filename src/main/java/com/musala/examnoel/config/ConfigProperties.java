@@ -20,5 +20,6 @@ public class ConfigProperties {
     private String duplicado;
     private String actualizacion;
     private String msgError;
+    private String notFound;
 
 }

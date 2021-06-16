@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-/*
-    User:Eduardo Noel<enoel@soaint.com>
-    Date: 15/5/21
-    Time: 20:58
-*/
+
 @Component
 public class OpenApiConfiguration {
 

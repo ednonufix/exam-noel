@@ -5,7 +5,8 @@ spring:
     port: 6379
 
 app:
-  guardado: Guardado con éxito
+  notFound: Gateway not found
+  guardado: Saved successfully
   borrado: Tarea borrada con éxito
   noId: No existe el ID
   duplicado: Duplicado
