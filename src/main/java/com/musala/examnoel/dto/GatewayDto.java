@@ -25,17 +25,17 @@ public class GatewayDto implements Serializable {
 
     private String uuid;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "You must send this value")
+    @NotEmpty(message = "Cannot be sent in blank")
     private String name;
 
     @NotNull
     @Pattern(regexp = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
-            message = "IP address is wrong")
+            message = "IP address is wrong!!!")
     private String ip;
 
     @Valid
-    @Size(min = 1, max = 10,message = "Debe enviar al menos 1 periferico")
+    @Size(min = 1, max = 10,message = "Must send at least 1 peripheral")
     private List<PeripheralDto> peripherals;
 
 }

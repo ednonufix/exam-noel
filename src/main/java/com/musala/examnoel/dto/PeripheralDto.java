@@ -18,14 +18,14 @@ public class PeripheralDto implements Serializable {
 
     private Long uid;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "You must send this value")
+    @NotEmpty(message = "Cannot be sent in blank")
     private String vector;
 
-    @NotNull
+    @NotNull(message = "You must specify a date")
     private LocalDate dateCreated;
 
-    @NotNull
+    @NotNull(message = "Must send true or false")
     private Boolean status;
 
 }

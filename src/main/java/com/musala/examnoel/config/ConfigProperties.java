@@ -16,8 +16,6 @@ public class ConfigProperties {
 
     private String guardado;
     private String borrado;
-    private String noId;
-    private String duplicado;
     private String actualizacion;
     private String msgError;
     private String notFound;

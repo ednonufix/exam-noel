@@ -7,13 +7,15 @@ spring:
 app:
   notFound: Gateway not found
   guardado: Saved successfully
-  borrado: Tarea borrada con éxito
-  noId: No existe el ID
-  duplicado: Duplicado
-  actualizacion: Actualización realizada con éxito
-  msgError: Ha ocurrido un error severo
+  borrado: Peripheral successfully deleted
+  actualizacion: Successful update
+  msgError: A severe error has occurred
 
 springdoc:
   version: 0.0.1
-vaadin:
-  urlMapping: /ui/*
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus

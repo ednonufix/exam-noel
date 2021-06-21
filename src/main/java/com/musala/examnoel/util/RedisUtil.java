@@ -27,7 +27,7 @@ public class RedisUtil {
         this.templateGateway = gatewayReactiveRedisTemplate.opsForHash(gatewayReactiveRedisTemplate.getSerializationContext());
     }
 
-    public Mono<Void> saveGateway(Gateway gateway) {
+    public Mono<Boolean> saveGateway(Gateway gateway) {
         templateGateway.put(GATEWAY, gateway.getUuid(), gateway).subscribe();
         return Mono.empty();
     }
@@ -42,7 +42,7 @@ public class RedisUtil {
                 .single();
     }
 
-    public Mono<Void> deletePeripheral(String uuid, Long idPeripheral) {
+    public Mono<Boolean> deletePeripheral(String uuid, Long idPeripheral) {
         templateGateway.get(GATEWAY,uuid)
                 .flatMap(valor -> {
 
@@ -59,7 +59,7 @@ public class RedisUtil {
         return Mono.empty();
     }
 
-    public Mono<Void> addPeripheral(String uuid, Peripheral peripheral) {
+    public Mono<Boolean> addPeripheral(String uuid, Peripheral peripheral) {
         templateGateway.get(GATEWAY,uuid)
                 .flatMap(valor -> {
 

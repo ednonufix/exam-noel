@@ -15,7 +15,6 @@ import com.musala.examnoel.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,12 +33,7 @@ public class ExamServiceImpl implements ExamService {
     private final RedisUtil redisUtil;
     private final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
-    private ConfigProperties configProperties;
-
-    @Autowired
-    public void setConfigProperties(ConfigProperties configProperties) {
-        this.configProperties = configProperties;
-    }
+    private final ConfigProperties configProperties;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -57,7 +51,6 @@ public class ExamServiceImpl implements ExamService {
                 .build())
                 .thenReturn(TemplateControllerDto.builder().msg(configProperties.getGuardado()).build())
                 .onErrorMap(Exception.class, ex -> new ExamServiceException(configProperties.getMsgError()));
-
     }
 
     @Override
