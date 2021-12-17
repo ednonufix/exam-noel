@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-alpine-slim
+FROM registry.access.redhat.com/ubi8/openjdk-11:1.10
 
 # Add System Info
 LABEL system="musala-exam" \
@@ -6,14 +6,13 @@ LABEL system="musala-exam" \
     type="microservice"
 
 # Optional values
-ENV APP_NAME="demo"
+ENV APP_NAME="musala-exam"
 ENV BUILD_DIR="build/libs"
 
 # Set environments variables
 ENV TZ=America/Havana
 
-RUN apk add --update tzdata
+COPY ./target/*.jar /app.jar
 
-COPY ./target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app.jar"]

@@ -1,5 +1,6 @@
 package com.musala.examnoel.service.impl;
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 import com.musala.examnoel.config.ConfigProperties;
@@ -21,7 +22,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 @Slf4j
@@ -29,7 +29,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequiredArgsConstructor
 public class ExamServiceImpl implements ExamService {
 
-    private static final AtomicLong idCounter = new AtomicLong(1);
     private final RedisUtil redisUtil;
     private final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
@@ -40,7 +39,7 @@ public class ExamServiceImpl implements ExamService {
     public Mono<TemplateControllerDto> saveGateway(GatewayDto gatewayDto) {
 
         if (ObjectUtils.isNotEmpty(gatewayDto.getPeripherals())) {
-            gatewayDto.getPeripherals().parallelStream().forEach(x -> x.setUid(idCounter.getAndIncrement()));
+            gatewayDto.getPeripherals().parallelStream().forEach(x -> x.setUid(NanoIdUtils.DEFAULT_NUMBER_GENERATOR.nextLong()));
         }
 
         return redisUtil.saveGateway(Gateway.builder()
@@ -79,7 +78,7 @@ public class ExamServiceImpl implements ExamService {
     public Mono<TemplateControllerDto> addPeripheral(String uuid, PeripheralDto peripheralDto) {
 
         return redisUtil.getGateway(uuid)
-                .doOnNext(x -> peripheralDto.setUid(idCounter.getAndIncrement()))
+                .doOnNext(x -> peripheralDto.setUid(NanoIdUtils.DEFAULT_NUMBER_GENERATOR.nextLong()))
                 .map(x -> mapper.map(peripheralDto, Peripheral.class))
                 .doOnNext(x -> redisUtil.addPeripheral(uuid, x).subscribe())
                 .thenReturn(TemplateControllerDto.builder().msg(configProperties.getActualizacion()).build())
