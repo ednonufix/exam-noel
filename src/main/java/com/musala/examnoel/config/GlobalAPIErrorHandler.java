@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalAPIErrorHandler {
 
-	@SuppressWarnings("rawtypes")
-	@ExceptionHandler(ExamServiceException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ResponseEntity errorPeticion(ExamServiceException ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new TemplateControllerDto(ex.getMessage()));
-	}
+    @SuppressWarnings("rawtypes")
+    @ExceptionHandler(ExamServiceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity errorPeticion(ExamServiceException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new TemplateControllerDto(ex.getMessage()));
+    }
 
     @SuppressWarnings("rawtypes")
     @ExceptionHandler(ExamServiceNotFoundException.class)
@@ -29,12 +29,12 @@ public class GlobalAPIErrorHandler {
                 .body(new TemplateControllerDto(ex.getMessage()));
     }
 
-	@SuppressWarnings("rawtypes")
-	@ExceptionHandler(Exception.class)
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ResponseEntity internalError(Exception ex) {
+    @SuppressWarnings("rawtypes")
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity internalError(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new TemplateControllerDto(ex.getMessage()));
-	}
+    }
 
 }

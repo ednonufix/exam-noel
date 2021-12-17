@@ -17,7 +17,7 @@ public class RedisProperties {
     }
 
     @Bean
-    public void startServer(){
+    public void startServer() {
         redisServer.start();
     }
 

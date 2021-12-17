@@ -10,9 +10,13 @@ import reactor.core.publisher.Mono;
 public interface ExamService {
 
     Mono<TemplateControllerDto> saveGateway(GatewayDto gatewayDto);
+
     Mono<TemplateControllerDto> deletePeripheral(String uuid, Long idPeripheral);
+
     Mono<TemplateControllerDto> addPeripheral(String uuid, PeripheralDto peripheralDto);
+
     Flux<GatewayDto> listGateway();
+
     Mono<GatewayDto> getGateway(String uuid);
 
 }

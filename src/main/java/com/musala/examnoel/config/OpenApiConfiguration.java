@@ -15,9 +15,9 @@ public class OpenApiConfiguration {
     @Bean
     public OpenAPI customOpenAPI(@Value("${springdoc.version}") String appVersion) {
         return new OpenAPI()
-                .info(new Info().title("Mantenedor API").version(appVersion)
+                .info(new Info().title("Gateway API").version(appVersion)
                         .license(new License().name("Apache 2.0").url("http://demo.org"))
-                .contact(new Contact().name("Eduardo Noel").email("enoel@soaint.com")));
+                        .contact(new Contact().name("Eduardo Noel").email("enoel.corebsd@soaint.com")));
     }
 
 }

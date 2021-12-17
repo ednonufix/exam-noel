@@ -44,11 +44,11 @@ public class ExamServiceImpl implements ExamService {
         }
 
         return redisUtil.saveGateway(Gateway.builder()
-                .ip(gatewayDto.getIp())
-                .name(gatewayDto.getName())
-                .uuid(UUID.randomUUID().toString())
-                .peripherals(mapper.map(gatewayDto.getPeripherals(), List.class))
-                .build())
+                        .ip(gatewayDto.getIp())
+                        .name(gatewayDto.getName())
+                        .uuid(UUID.randomUUID().toString())
+                        .peripherals(mapper.map(gatewayDto.getPeripherals(), List.class))
+                        .build())
                 .thenReturn(TemplateControllerDto.builder().msg(configProperties.getGuardado()).build())
                 .onErrorMap(Exception.class, ex -> new ExamServiceException(configProperties.getMsgError()));
     }
@@ -56,21 +56,21 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Flux<GatewayDto> listGateway() {
         return redisUtil.listGateway()
-                .map(x->mapper.map(x,GatewayDto.class))
+                .map(x -> mapper.map(x, GatewayDto.class))
                 .onErrorMap(Exception.class, ex -> new ExamServiceException(configProperties.getMsgError()));
     }
 
     @Override
     public Mono<GatewayDto> getGateway(String uuid) {
         return redisUtil.getGateway(uuid)
-                .map(x->mapper.map(x,GatewayDto.class))
+                .map(x -> mapper.map(x, GatewayDto.class))
                 .onErrorMap(Exception.class, ex -> new ExamServiceNotFoundException(configProperties.getNotFound()));
     }
 
     @Override
     public Mono<TemplateControllerDto> deletePeripheral(String uuid, Long idPeripheral) {
         return redisUtil.getGateway(uuid)
-                .doOnNext(x-> redisUtil.deletePeripheral(uuid,idPeripheral).subscribe())
+                .doOnNext(x -> redisUtil.deletePeripheral(uuid, idPeripheral).subscribe())
                 .thenReturn(TemplateControllerDto.builder().msg(configProperties.getBorrado()).build())
                 .onErrorMap(Exception.class, ex -> new ExamServiceNotFoundException(configProperties.getNotFound()));
     }
@@ -79,9 +79,9 @@ public class ExamServiceImpl implements ExamService {
     public Mono<TemplateControllerDto> addPeripheral(String uuid, PeripheralDto peripheralDto) {
 
         return redisUtil.getGateway(uuid)
-                .doOnNext(x->peripheralDto.setUid(idCounter.getAndIncrement()))
-                .map(x->mapper.map(peripheralDto, Peripheral.class))
-                .doOnNext(x-> redisUtil.addPeripheral(uuid,x).subscribe())
+                .doOnNext(x -> peripheralDto.setUid(idCounter.getAndIncrement()))
+                .map(x -> mapper.map(peripheralDto, Peripheral.class))
+                .doOnNext(x -> redisUtil.addPeripheral(uuid, x).subscribe())
                 .thenReturn(TemplateControllerDto.builder().msg(configProperties.getActualizacion()).build())
                 .onErrorMap(Exception.class, ex -> new ExamServiceNotFoundException(configProperties.getNotFound()));
     }

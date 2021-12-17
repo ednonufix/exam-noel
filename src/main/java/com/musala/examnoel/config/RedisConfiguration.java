@@ -37,20 +37,22 @@ import java.util.Date;
 @Configuration
 public class RedisConfiguration {
 
-     ObjectMapper mapper = new Jackson2ObjectMapperBuilder()
-             .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-             .modulesToInstall( new JavaTimeModule().addSerializer(Date.class, new DateSerializer(Boolean.FALSE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")))
-                     .addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                     .addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                     .addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")))
-                     .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                     .addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                     .addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss"))))
-             .failOnEmptyBeans( false )
-             .build();
+    private static final String FORMATO_HORA = "yyyy-MM-dd HH:mm:ss";
 
-   @Bean("GATEWAY")
-    public ReactiveRedisTemplate<String, Gateway> reactiveRedisTemplate(ReactiveRedisConnectionFactory connectionFactory ) {
+    ObjectMapper mapper = new Jackson2ObjectMapperBuilder()
+            .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .modulesToInstall(new JavaTimeModule().addSerializer(Date.class, new DateSerializer(Boolean.FALSE, new SimpleDateFormat(FORMATO_HORA)))
+                    .addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(FORMATO_HORA)))
+                    .addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")))
+                    .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(FORMATO_HORA)))
+                    .addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss"))))
+            .failOnEmptyBeans(false)
+            .build();
+
+    @Bean("GATEWAY")
+    public ReactiveRedisTemplate<String, Gateway> reactiveRedisTemplate(ReactiveRedisConnectionFactory connectionFactory) {
 
         GenericJackson2JsonRedisSerializer keySerializer = new GenericJackson2JsonRedisSerializer();
 
@@ -58,7 +60,7 @@ public class RedisConfiguration {
         serializer.setObjectMapper(mapper);
 
         RedisSerializationContext.RedisSerializationContextBuilder<String, Gateway> builder = RedisSerializationContext.newSerializationContext(keySerializer);
-        RedisSerializationContext< String, Gateway> context = builder.value(serializer).hashValue(serializer).hashKey(keySerializer).build();
+        RedisSerializationContext<String, Gateway> context = builder.value(serializer).hashValue(serializer).hashKey(keySerializer).build();
         return new ReactiveRedisTemplate<>(connectionFactory, context);
 
     }
